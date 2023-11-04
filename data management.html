@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <template id="car-template">
-    <div class="card col-8" style="width: 18rem; margin:10px">
+    <div class="card col-4" style="width: 18rem; margin:10px">
         <div class="card-body">
             <h5 class="card-title">Car title</h5>
             <p class="card-text">Car text.</p>
@@ -12,25 +12,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootst
-rap.min.css" rel="stylesheet">
-    <title>Dynamic Cars</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Car news</title>
 </head>
 
 <body>
-    <div id="car-list" class="row"></div>
+    <div class="container p-3">
+        <h2>Latest Car News</h2>
+        <div id="news-list" class="row g-3 p-3"></div>
+
+    <!-- part 2 - stop interval button -->
+    <div><button onclick="stopInterval()">Stop Reloading</button></div>
+
+    <!-- part 2: form to create new news item / checked during tutorials-->
+    <form onsubmit="createNewsItem(event)">
+        <label>News Item Title: <input name="title" id="newsTitle"></label><br>
+        <label>News Item Content: <input name="content" id="newsContent"></label>
+        <button>Add News Item</button>
+    </form>
+</div>
+
     <script>
+
+let news = [
+            {
+                id: 1, title: 'Electric Vehicles',
+                content: "Newly made EV cars 2023!"
+            },
+            {
+                id: 2, title: 'Must have sport cars',
+                content: "Award winning sport cars..."
+            },
+            {
+                id: 3, title: 'Car loan rate',
+                content: "New doesnt equal better..."
+            }
+        ];
+
+        function getNews() {
+            // clear out previous news items
+            document.getElementById('news-list').innerText = '';
+
+            news.forEach(item => addNewsItem(item))
+        }
+
+
         // use carData and getCars function from previous slide
         // clone, then populate, then append a new template
-        function addCard(car) {
+        function addNewsItem(news) {
             const template =
-                document.getElementById("car-template").content.cloneNode(true);
-            template.querySelector('.card-title').innerText = car.title;
+            document.getElementById("news-template").content.cloneNode(true);
+            template.querySelector('.card-title').innerText = news.title;
             template.querySelector('.card-text').innerText = car.description;
-            document.querySelector('#car-list').appendChild(template);
+            document.querySelector('#news-list').appendChild(template);
         }
-        // get data asynchronously, then use it to populate a template
-        getCars().then((cars) => cars.forEach(car => addCard(car)))
+        // get initial news
+        getNews ();
+
+        let newsTimer = setInterval(() => {
+            
+        }, 5000);
     </script>
 </body>
 
