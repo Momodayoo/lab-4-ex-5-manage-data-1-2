@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<template id="car-template">
-    <div class="card col-4" style="width: 18rem; margin:10px">
+<template id="news-template">
+    <div class="card col-4">
         <div class="card-body">
-            <h5 class="card-title">Car title</h5>
-            <p class="card-text">Car text.</p>
+            <h5 class="card-title">News title</h5>
+            <p class="card-text">News body</p>
         </div>
     </div>
 </template>
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Car news</title>
+    <title>Motorsport News</title>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -50,28 +53,37 @@ let news = [
         ];
 
         function getNews() {
-            // clear out previous news items
+            // clears old news items
             document.getElementById('news-list').innerText = '';
 
             news.forEach(item => addNewsItem(item))
         }
 
-
-        // use carData and getCars function from previous slide
         // clone, then populate, then append a new template
         function addNewsItem(news) {
-            const template =
-            document.getElementById("news-template").content.cloneNode(true);
+            const template = document.getElementById("news-template").content.cloneNode(true);
             template.querySelector('.card-title').innerText = news.title;
-            template.querySelector('.card-text').innerText = car.description;
+            template.querySelector('.card-text').innerText = news.content;
             document.querySelector('#news-list').appendChild(template);
         }
-        // get initial news
-        getNews ();
 
-        let newsTimer = setInterval(() => {
-            
-        }, 5000);
+        // load news initially
+        getNews();
+
+        // reload news every 5 seconds
+        let newsTimer = setInterval(getNews, 5000);
+
+        // part 2: add news item
+        function createNewsItem(event) {
+            event.preventDefault();
+            let newTitle = document.getElementById('newsTitle').value;
+            let newContent = document.getElementById('newsContent').value;
+            news.push({title: newTitle, content: newContent, id: news.length + 1})
+        }
+
+        function stopInterval() {
+            clearInterval(newsTimer)
+        }
     </script>
 </body>
 
